@@ -39,4 +39,5 @@ app.use(session({
 require('./services/user.service.server')(app);
 require('./services/applicant.service.server')(app);
 require('./services/instructor.service.server')(app);
+require('./services/skill.service.server')(app);
 app.listen(3000)

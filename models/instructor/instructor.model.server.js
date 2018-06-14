@@ -30,7 +30,7 @@ updateUser=(id,user)=>(
                     oldUser.lastName=user.lastName
                 if(user.email)
                     oldUser.email=user.email
-                studentModel.updateOne({id},oldUser);
+                instructorModel.updateOne({_id:id},oldUser);
                 return oldUser
             })
 )

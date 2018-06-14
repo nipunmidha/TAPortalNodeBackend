@@ -12,7 +12,11 @@ function findAllApplicants() {
 }
 
 function findApplicantById(id) {
-    return studentModel.findById(id);
+    return studentModel.findById(id,{password:0});
+}
+
+deleteApplicant=(userId)=>{
+    studentModel.deleteOne(userId);
 }
 
 updateUser=(id,user)=> (
@@ -28,7 +32,9 @@ updateUser=(id,user)=> (
                     oldUser.lastName = user.lastName
                 if (user.email)
                     oldUser.email = user.email
-                studentModel.updateOne({id},oldUser);
+                if (user.resume)
+                     oldUser.resume = user.resume
+                studentModel.updateOne({_id:id},oldUser);
                 return oldUser;
             }
         )
@@ -38,7 +44,8 @@ var api={
     createApplicant:createApplicant,
     findAllApplicants:findAllApplicants,
     findApplicantById:findApplicantById,
-    updateUser:updateUser
+    updateUser:updateUser,
+    deleteApplicant:deleteApplicant
 }
 
 

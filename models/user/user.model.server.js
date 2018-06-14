@@ -16,7 +16,7 @@ function findUserById(userId) {
 
  login=(credentials)=>{
 
-    return userModel.findOne(credentials);
+    return userModel.findOne(credentials,{password:0});
  }
 
 deleteUser=(userId)=>{

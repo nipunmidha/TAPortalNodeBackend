@@ -6,6 +6,7 @@ var applicantSchema = mongoose.Schema({
     firstName: String,
     lastName: String,
     email: String,
+    resume:String,
     type:String
 }, {collection: 'user'});
 module.exports = applicantSchema;

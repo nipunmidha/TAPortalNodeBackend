@@ -37,11 +37,13 @@ module.exports =(app) => {
         if(user)
             res.send(user);
         else
-            res.status(401);
+            res.send(401);
     }
 
-    app.delete('/api/applicant/:id',deleteUser)
 
+
+    app.delete('/api/user/:id',deleteUser)
+    // Delete only from user collection
     function deleteUser(req, res) {
         var id = req.params['id'];
         userModel.deleteUser(id);
