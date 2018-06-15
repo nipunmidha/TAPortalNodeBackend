@@ -8,12 +8,16 @@ function createInstructor(user) {
 }
 
 function findAllInstructors() {
-    return instructorModel.find({type:'INSTRUCTOR'});
+    return instructorModel.find({type:'INSTRUCTOR',password:0})
+        .populate('school')
+        .exec();
 }
 
 
 function findInstructorById(id) {
-    return instructorModel.findById(id);
+    return instructorModel.findById(id,{password:0})
+        .populate('school')
+        .exec();
 }
 
 updateUser=(id,user)=>(
@@ -30,6 +34,8 @@ updateUser=(id,user)=>(
                     oldUser.lastName=user.lastName
                 if(user.email)
                     oldUser.email=user.email
+                if(user.school)
+                    oldUser.school=user.school
                 instructorModel.updateOne({_id:id},oldUser);
                 return oldUser
             })

@@ -8,15 +8,19 @@ function createApplicant(user) {
 }
 
 function findAllApplicants() {
-    return studentModel.find({type:'APPLICANT'});
+    return studentModel.find({type:'APPLICANT'},{password:0})
+        .populate('school')
+        .exec();
 }
 
 function findApplicantById(id) {
-    return studentModel.findById(id,{password:0});
+    return studentModel.findById(id,{password:0})
+        .populate('school')
+        .exec();
 }
 
 deleteApplicant=(userId)=>{
-    studentModel.deleteOne(userId);
+    return studentModel.deleteOne({_id:userId});
 }
 
 updateUser=(id,user)=> (
@@ -34,6 +38,8 @@ updateUser=(id,user)=> (
                     oldUser.email = user.email
                 if (user.resume)
                      oldUser.resume = user.resume
+                if(user.school)
+                     oldUser.school=user.school
                 studentModel.updateOne({_id:id},oldUser);
                 return oldUser;
             }

@@ -22,10 +22,12 @@ module.exports =(app) => {
             })
     }
 
-    app.post('/api/user',createUser)
+    app.post('/api/school/:id/user',createUser)
 
     function createUser(req, res) {
         var user= req.body;
+        var id = req.params['id'];
+        user.school=id;
         userModel.createUser(user)
              .then(user => res.send(user))
     }
@@ -35,9 +37,10 @@ module.exports =(app) => {
     function profile(req, res) {
         var user=req.session['currentUser'];
         if(user)
-            res.send(user);
+            userModel.findUserById(user._id)
+                .then(user => res.send(user))
         else
-            res.send(401);
+            res.sendStatus(401);
     }
 
 
@@ -47,6 +50,7 @@ module.exports =(app) => {
     function deleteUser(req, res) {
         var id = req.params['id'];
         userModel.deleteUser(id);
+        res.sendStatus(200);
     }
 
 }

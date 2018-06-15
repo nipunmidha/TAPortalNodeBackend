@@ -11,7 +11,9 @@ function findAllUsers() {
 }
 
 function findUserById(userId) {
-    return userModel.findById(userId);
+    return userModel.findById(userId,{password:0})
+        .populate('school')
+        .exec();
 }
 
  login=(credentials)=>{
@@ -23,12 +25,17 @@ deleteUser=(userId)=>{
     userModel.deleteOne(userId);
 }
 
+removeSchoolForUsers=(schoolId)=>{
+    userModel.update({school:schoolId},{$set:{school:''}},{ multi: true})
+}
 
 var api={
     createUser:createUser,
     findAllUsers:findAllUsers,
     login:login,
-    deleteUser:deleteUser
+    deleteUser:deleteUser,
+    removeSchoolForUsers:removeSchoolForUsers,
+    findUserById:findUserById
 }
 
 module.exports = api;

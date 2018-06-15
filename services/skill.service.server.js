@@ -15,7 +15,7 @@ module.exports =(app) => {
         if(user && user.type==="APPLICANT")
             skillModel.findAllSkillsForApplicant(user._id)
                 .then(skills => res.send(skills))
-        else res.send(401);
+        else res.sendStatus(401);
     }
 
 
@@ -28,7 +28,7 @@ module.exports =(app) => {
                 if(skills)
                     res.send(skills)
                 else
-                    res.send(400)
+                    res.sendStatus(400)
 
 
             })
@@ -55,7 +55,7 @@ module.exports =(app) => {
                 .then(skill => res.send(skill))
         }
         else
-            res.send(401);
+            res.sendStatus(401);
     }
 
 
@@ -71,6 +71,7 @@ module.exports =(app) => {
     function deleteSkill(req, res) {
         var id = req.params['id'];
         skillModel.deleteSkill(id)
+        res.sendStatus(200);
     }
 
 }

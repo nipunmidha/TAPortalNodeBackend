@@ -25,14 +25,16 @@ module.exports =(app) => {
             typeModel.findApplicantById(user._id)
                 .then(user => res.send(user))
         else
-            res.send(401);
+            res.sendStatus(401);
     }
 
 
 
-    app.post('/api/applicant',createUser)
+    app.post('/api/school/:id/applicant',createUser)
     function createUser(req, res) {
+        var id = req.params['id'];
         var user= req.body;
+        user.school=id;
         typeModel.createApplicant(user)
             .then(user => res.send(user))
     }
@@ -61,7 +63,7 @@ module.exports =(app) => {
     function deleteUser(req, res) {
         var id = req.params['id'];
         skillModel.deleteAllSkillsForApplicant(id)
-            .then(()=>
-                typeModel.deleteApplicant(id))
+        typeModel.deleteApplicant(id)
+            .then(res.sendStatus(200))
     }
 }

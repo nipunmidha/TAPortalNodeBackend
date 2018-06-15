@@ -40,4 +40,6 @@ require('./services/user.service.server')(app);
 require('./services/applicant.service.server')(app);
 require('./services/instructor.service.server')(app);
 require('./services/skill.service.server')(app);
+require('./services/school.service.server')(app);
+require('./services/course.service.server')(app);
 app.listen(3000)

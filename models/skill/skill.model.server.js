@@ -36,7 +36,7 @@ deleteSkill=(skilId)=>{
 }
 
 deleteAllSkillsForApplicant=(applcantId)=>{
-    skillModel.deleteMany({applicant:applcantId});
+ return skillModel.deleteMany({applicant:applcantId});
 }
 
 

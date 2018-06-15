@@ -9,9 +9,11 @@ module.exports =(app) => {
     }
 
 
-    app.post('/api/instructor',createUser)
+    app.post('/api/school/:id/instructor',createUser)
     function createUser(req, res) {
         var user= req.body;
+        var id = req.params['id'];
+        user.school=id;
         typeModel.createInstructor(user)
             .then(user => res.send(user))
     }

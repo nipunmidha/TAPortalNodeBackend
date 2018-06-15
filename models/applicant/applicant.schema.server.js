@@ -7,6 +7,7 @@ var applicantSchema = mongoose.Schema({
     lastName: String,
     email: String,
     resume:String,
-    type:String
+    type:String,
+    school: {type: mongoose.Schema.Types.ObjectId, ref: 'SchoolModel' }
 }, {collection: 'user'});
 module.exports = applicantSchema;
