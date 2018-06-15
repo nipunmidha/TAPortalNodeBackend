@@ -22,7 +22,7 @@ function findUserById(userId) {
  }
 
 deleteUser=(userId)=>{
-    userModel.deleteOne(userId);
+    userModel.deleteOne({_id:userId});
 }
 
 removeSchoolForUsers=(schoolId)=>{

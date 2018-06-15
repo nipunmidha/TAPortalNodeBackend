@@ -42,4 +42,5 @@ require('./services/instructor.service.server')(app);
 require('./services/skill.service.server')(app);
 require('./services/school.service.server')(app);
 require('./services/course.service.server')(app);
+require('./services/ica.service.server')(app);
 app.listen(3000)

@@ -4,5 +4,5 @@ var courseSchema = mongoose.Schema({
     name: String,
     courseNumber: String,
     school: {type: mongoose.Schema.Types.ObjectId, ref: 'SchoolModel' }},
-    {collection: 'user'});
+    {collection: 'course'});
 module.exports = courseSchema;
