@@ -11,11 +11,18 @@ module.exports =(app) => {
 
     app.post('/api/school/:id/instructor',createUser)
     function createUser(req, res) {
-        var user= req.body;
         var id = req.params['id'];
-        user.school=id;
-        typeModel.createInstructor(user)
-            .then(user => res.send(user))
+        var bod= req.body;
+        if(bod.password === bod.confirmPassword && !typeModel.checkEmailTaken(bod.email)) {
+            var user={
+                email:bod.email,
+                password:bod.password,
+                school:id
+            }
+            typeModel.createApplicant(user)
+                .then(user => res.send(user))
+        }
+        else res.sendStatus(409);
     }
 
 

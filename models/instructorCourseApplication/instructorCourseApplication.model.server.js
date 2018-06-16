@@ -55,6 +55,8 @@ updateIca=(id,ica)=>(
                 oldIca.skillsMustNeeded=ica.skillsMustNeeded
             if(ica.year)
                 oldIca.year=ica.semestyearer
+            if(ica.sectionName)
+                oldIca.sectionName=ica.sectionName
             instructorCourseModel.updateOne({_id:id},oldIca);
             return oldIca;
         })

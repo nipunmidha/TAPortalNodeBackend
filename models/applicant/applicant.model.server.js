@@ -23,6 +23,16 @@ deleteApplicant=(userId)=>{
     return studentModel.deleteOne({_id:userId});
 }
 
+checkEmailTaken = (email)=>{
+    return studentModel.find({email:email},function (err, users){
+        if(err)console.log(err)
+        if(users.length)
+            return true;
+        else return false;
+    }
+    )
+}
+
 updateUser=(id,user)=> (
     studentModel.findById(id)
         .then((oldUser) => {
@@ -51,7 +61,8 @@ var api={
     findAllApplicants:findAllApplicants,
     findApplicantById:findApplicantById,
     updateUser:updateUser,
-    deleteApplicant:deleteApplicant
+    deleteApplicant:deleteApplicant,
+    checkEmailTaken:checkEmailTaken
 }
 
 

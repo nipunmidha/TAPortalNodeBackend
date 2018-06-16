@@ -5,6 +5,7 @@ var instructorCourse = mongoose.Schema({
         noOfTa: Number,
         syllabus:String,
         skillsMustNeeded:String,
+        sectionName:String,
         semester:{type:String,enum:SEMESTER},
         year:Number,
         postionsFilled: { type: Boolean, default: false },

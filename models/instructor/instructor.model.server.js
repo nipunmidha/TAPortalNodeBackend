@@ -41,11 +41,22 @@ updateUser=(id,user)=>(
             })
 )
 
+checkEmailTaken = (email)=> {
+    return instructorModel.find({email: email}, function (err, users) {
+            if (err) console.log(err)
+            if (users.length)
+                return true;
+            else return false;
+        }
+    )
+}
+
 var api={
     createInstructor:createInstructor,
     findAllInstructors:findAllInstructors,
     findInstructorById:findInstructorById,
-    updateUser:updateUser
+    updateUser:updateUser,
+    checkEmailTaken:checkEmailTaken
 }
 
 module.exports = api;

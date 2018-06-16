@@ -22,15 +22,15 @@ module.exports =(app) => {
             })
     }
 
-    app.post('/api/school/:id/user',createUser)
-
-    function createUser(req, res) {
-        var user= req.body;
-        var id = req.params['id'];
-        user.school=id;
-        userModel.createUser(user)
-             .then(user => res.send(user))
-    }
+    // app.post('/api/school/:id/user',createUser)
+    //
+    //  function createUser(req, res) {
+    //     var user= req.body;
+    //     var id = req.params['id'];
+    //     user.school=id;
+    //     userModel.createUser(user)
+    //          .then(user => res.send(user))
+    // }
 
 
     app.get('/api/profile', profile);
