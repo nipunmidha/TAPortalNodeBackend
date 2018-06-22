@@ -15,7 +15,7 @@ module.exports =(app) => {
             .then((user)=>{
                 if(user) {
                     req.session['currentUser'] = user;
-                    res.send(user);
+                    res.json(user);
                 }
                 else
                     res.status(401);

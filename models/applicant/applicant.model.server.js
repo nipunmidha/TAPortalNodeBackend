@@ -24,13 +24,7 @@ deleteApplicant=(userId)=>{
 }
 
 checkEmailTaken = (email)=>{
-    return studentModel.find({email:email},function (err, users){
-        if(err)console.log(err)
-        if(users.length)
-            return true;
-        else return false;
-    }
-    )
+    return studentModel.find({email:email});
 }
 
 updateUser=(id,user)=> (

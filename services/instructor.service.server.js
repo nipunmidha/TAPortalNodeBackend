@@ -13,16 +13,25 @@ module.exports =(app) => {
     function createUser(req, res) {
         var id = req.params['id'];
         var bod= req.body;
-        if(bod.password === bod.confirmPassword && !typeModel.checkEmailTaken(bod.email)) {
-            var user={
-                email:bod.email,
-                password:bod.password,
-                school:id
-            }
-            typeModel.createApplicant(user)
-                .then(user => res.send(user))
+        if(bod.password === bod.confirmPassword )  {
+            typeModel.checkEmailTaken(bod.email)
+                .then(rep =>
+                {
+                    if(rep.length === 0)
+                    {
+                        var user={
+                            email:bod.email,
+                            password:bod.password,
+                            school:id
+                        }
+                        typeModel.createApplicant(user)
+                            .then(user => res.send(user))
+                    }
+                    else res.sendStatus(409);
+                })
+
         }
-        else res.sendStatus(409);
+        else res.sendStatus(401);
     }
 
 

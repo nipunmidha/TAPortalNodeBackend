@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var express = require('express');
 var bodyParser = require('body-parser');
 
-mongoose.connect('mongodb://localhost/Testtt',function (err){
+mongoose.connect(process.env.M_URL,function (err){
     if (err) throw err;
     console.log('Successfully connected');
 });
@@ -43,4 +43,5 @@ require('./services/skill.service.server')(app);
 require('./services/school.service.server')(app);
 require('./services/course.service.server')(app);
 require('./services/ica.service.server')(app);
-app.listen(3000)
+require('./services/admin.service.server')(app);
+app.listen(process.env.PORT ||3000)

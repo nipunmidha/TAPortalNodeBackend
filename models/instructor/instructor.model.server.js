@@ -42,13 +42,7 @@ updateUser=(id,user)=>(
 )
 
 checkEmailTaken = (email)=> {
-    return instructorModel.find({email: email}, function (err, users) {
-            if (err) console.log(err)
-            if (users.length)
-                return true;
-            else return false;
-        }
-    )
+    return instructorModel.find({email: email});
 }
 
 var api={

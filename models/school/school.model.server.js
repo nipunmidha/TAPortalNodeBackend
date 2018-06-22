@@ -19,6 +19,11 @@ function deleteSchool(id) {
     return schoolModel.deleteOne({_id:id});
 }
 
+updateSchool = (id,school) =>
+{
+    return schoolModel.update({_id: id},{$set: school});
+}
+
 // updateSchool=(id,school)=>(
 //     instructorModel.findById(id)
 //         .then((oldUser)=>
@@ -42,7 +47,8 @@ var api={
     createSchool:createSchool,
     findAllSchools:findAllSchools,
     findSchoolById:findSchoolById,
-    deleteSchool:deleteSchool
+    deleteSchool:deleteSchool,
+    updateSchool: updateSchool
 }
 
 module.exports = api;
