@@ -5,7 +5,7 @@ module.exports =(app) => {
     app.get('/api/instructor',findAllUsers)
     function findAllUsers(req, res) {
         typeModel.findAllInstructors()
-            .then(users => res.send(users))
+            .then(users => res.json(users))
     }
 
 
@@ -22,9 +22,11 @@ module.exports =(app) => {
                         var user={
                             email:bod.email,
                             password:bod.password,
+                            firstName: bod.firstName,
+                            lastName: bod.lastName,
                             school:id
                         }
-                        typeModel.createApplicant(user)
+                        typeModel.createInstructor(user)
                             .then(user => res.send(user))
                     }
                     else res.sendStatus(409);
@@ -48,6 +50,13 @@ module.exports =(app) => {
         var id = req.params['id'];
         var user= req.body;
         typeModel.updateUser(id,user)
+            .then(user => res.send(user))
+    }
+
+    app.delete('/api/instructor/:id',deleteUser)
+    function deleteUser(req, res) {
+        var id = req.params['id'];
+        typeModel.deleteIns(id)
             .then(user => res.send(user))
     }
 

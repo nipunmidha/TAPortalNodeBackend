@@ -10,6 +10,14 @@ function findAllSchools() {
     return schoolModel.find();
 }
 
+function searchSchools(name) {
+
+    schools = schoolModel.find({name: {
+            "$regex": name,
+            "$options": "i"
+        }} );
+    return schools;
+}
 
 function findSchoolById(id) {
     return schoolModel.findById(id);
@@ -48,7 +56,8 @@ var api={
     findAllSchools:findAllSchools,
     findSchoolById:findSchoolById,
     deleteSchool:deleteSchool,
-    updateSchool: updateSchool
+    updateSchool: updateSchool,
+    searchSchools: searchSchools
 }
 
 module.exports = api;

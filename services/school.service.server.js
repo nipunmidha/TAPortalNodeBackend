@@ -20,6 +20,16 @@ module.exports =(app) => {
             res.sendStatus(400);
 
     }
+    app.post('/api/school/search',searchSchool)
+    function searchSchool(req, res) {
+        var school= req.body;
+        if(school.name) {
+            typeModel.searchSchools(school.name)
+                .then(resp => res.json(resp))
+        } else
+            res.sendStatus(400);
+
+    }
 
     // Any one
     app.get('/api/school/:id/details',findSchoolById)

@@ -8,7 +8,7 @@ function createInstructor(user) {
 }
 
 function findAllInstructors() {
-    return instructorModel.find({type:'INSTRUCTOR',password:0})
+    return instructorModel.find({type:'INSTRUCTOR'}, {password: 0})
         .populate('school')
         .exec();
 }
@@ -21,28 +21,32 @@ function findInstructorById(id) {
 }
 
 updateUser=(id,user)=>(
-        instructorModel.findById(id)
-            .then((oldUser)=>
-            {
-                if(user.username)
-                    oldUser.username=user.username
-                if(user.password)
-                    oldUser.password=user.password
-                if(user.firstName)
-                    oldUser.firstName=user.firstName
-                if(user.lastName)
-                    oldUser.lastName=user.lastName
-                if(user.email)
-                    oldUser.email=user.email
-                if(user.school)
-                    oldUser.school=user.school
-                instructorModel.updateOne({_id:id},oldUser);
-                return oldUser
-            })
+    instructorModel.update({_id:id},{$set: user})
+        // instructorModel.findById(id)
+        //     .then((oldUser)=>
+        //     {
+        //         if(user.username)
+        //             oldUser.username=user.username
+        //         if(user.password)
+        //             oldUser.password=user.password
+        //         if(user.firstName)
+        //             oldUser.firstName=user.firstName
+        //         if(user.lastName)
+        //             oldUser.lastName=user.lastName
+        //         if(user.email)
+        //             oldUser.email=user.email
+        //         if(user.school)
+        //             oldUser.school=user.school
+        //         instructorModel.updateOne({_id:id},oldUser);
+        //         return oldUser
+        //     })
 )
 
 checkEmailTaken = (email)=> {
     return instructorModel.find({email: email});
+}
+function deleteIns(id) {
+    return instructorModel.deleteOne({_id:id});
 }
 
 var api={
@@ -50,7 +54,8 @@ var api={
     findAllInstructors:findAllInstructors,
     findInstructorById:findInstructorById,
     updateUser:updateUser,
-    checkEmailTaken:checkEmailTaken
+    checkEmailTaken:checkEmailTaken,
+    deleteIns:deleteIns
 }
 
 module.exports = api;
