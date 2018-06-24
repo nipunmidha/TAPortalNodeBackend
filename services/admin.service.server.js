@@ -9,23 +9,23 @@ module.exports =(app) => {
     }
 
 
-    app.get('/api/admin/:id/profile',findUserById)
-    function findUserById(req, res) {
-        var id = req.params['id'];
-        typeModel.findAdminById(id)
-            .then(user => res.send(user))
-    }
+    // app.get('/api/admin/:id/profile',findUserById)
+    // function findUserById(req, res) {
+    //     var id = req.params['id'];
+    //     typeModel.findAdminById(id)
+    //         .then(user => res.send(user))
+    // }
 
 
-    app.get('/api/admin/profile',findUserProfile)
-    function findUserProfile(req, res) {
-        var user=req.session['currentUser'];
-        if(user)
-            user => res.send(user);
-        else
-            res.sendStatus(401);
-    }
-
+    // app.get('/api/admin/profile',findUserProfile)
+    // function findUserProfile(req, res) {
+    //     var user=req.session['currentUser'];
+    //     if(user)
+    //         user => res.send(user);
+    //     else
+    //         res.sendStatus(401);
+    // }
+    //
 
 
     app.post('/api/admin',createUser)

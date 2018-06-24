@@ -28,26 +28,27 @@ checkEmailTaken = (email)=>{
 }
 
 updateUser=(id,user)=> (
-    studentModel.findById(id)
-        .then((oldUser) => {
-                if (user.username)
-                    oldUser.username = user.username
-                if (user.password)
-                    oldUser.password = user.password
-                if (user.firstName)
-                    oldUser.firstName = user.firstName
-                if (user.lastName)
-                    oldUser.lastName = user.lastName
-                if (user.email)
-                    oldUser.email = user.email
-                if (user.resume)
-                     oldUser.resume = user.resume
-                if(user.school)
-                     oldUser.school=user.school
-                studentModel.updateOne({_id:id},oldUser);
-                return oldUser;
-            }
-        )
+    studentModel.update({_id: id},{$set:user})
+    // studentModel.findById(id)
+    //     .then((oldUser) => {
+    //             if (user.username)
+    //                 oldUser.username = user.username
+    //             if (user.password)
+    //                 oldUser.password = user.password
+    //             if (user.firstName)
+    //                 oldUser.firstName = user.firstName
+    //             if (user.lastName)
+    //                 oldUser.lastName = user.lastName
+    //             if (user.email)
+    //                 oldUser.email = user.email
+    //             if (user.resume)
+    //                  oldUser.resume = user.resume
+    //             if(user.school)
+    //                  oldUser.school=user.school
+    //             studentModel.updateOne({_id:id},oldUser);
+    //             return oldUser;
+    //         }
+    //     )
 )
 
 var api={

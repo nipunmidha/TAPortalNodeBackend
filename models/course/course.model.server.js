@@ -26,32 +26,36 @@ function findCourseById(id) {
         .exec();
 }
 
-// updateUser=(id,user)=>(
-//     instructorModel.findById(id)
-//         .then((oldUser)=>
-//         {
-//             if(user.username)
-//                 oldUser.username=user.username
-//             if(user.password)
-//                 oldUser.password=user.password
-//             if(user.firstName)
-//                 oldUser.firstName=user.firstName
-//             if(user.lastName)
-//                 oldUser.lastName=user.lastName
-//             if(user.email)
-//                 oldUser.email=user.email
-//             if(user.school)
-//                 oldUser.school=user.school
-//             instructorModel.updateOne({_id:id},oldUser);
-//             return oldUser
-//         })
-// )
+updateCourse=(id,user)=>(
+    courseModel.update({_id: id},{$set: user})
+)
+deleteCourse=(id)=>(
+    courseModel.remove({_id:id})
+)
+searchCourse = (course, id) =>{
+     return courseModel.find().and([
+         { $or:[
+             {name: {
+            "$regex": course,
+            "$options": "i"}},
+            {courseNumber: {
+             "$regex": course,
+             "$options": "i"
+                }
+            }]
+         }, {school: id}    ]
+     );
+}
 
 var api={
     createCourse:createCourse,
     findAllCourses:findAllCourses,
     findAllCoursesForSchool:findAllCoursesForSchool,
-    findCourseById:findCourseById
+    findCourseById:findCourseById,
+    updateCourse: updateCourse,
+    deleteCourse: deleteCourse,
+    searchCourse:searchCourse
+
 }
 
 module.exports = api;

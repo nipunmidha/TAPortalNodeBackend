@@ -10,23 +10,23 @@ module.exports =(app) => {
     }
 
 
-    app.get('/api/applicant/:id/profile',findUserById)
-    function findUserById(req, res) {
-        var id = req.params['id'];
-        typeModel.findApplicantById(id)
-            .then(user => res.send(user))
-    }
+    // app.get('/api/applicant/:id/profile',findUserById)
+    // function findUserById(req, res) {
+    //     var id = req.params['id'];
+    //     typeModel.findApplicantById(id)
+    //         .then(user => res.send(user))
+    // }
 
 
-    app.get('/api/applicant/profile',findUserProfile)
-    function findUserProfile(req, res) {
-        var user=req.session['currentUser'];
-        if(user)
-            typeModel.findApplicantById(user._id)
-                .then(user => res.send(user))
-        else
-            res.sendStatus(401);
-    }
+    // app.get('/api/applicant/profile',findUserProfile)
+    // function findUserProfile(req, res) {
+    //     var user=req.session['currentUser'];
+    //     if(user)
+    //         typeModel.findApplicantById(user._id)
+    //             .then(user => res.send(user))
+    //     else
+    //         res.sendStatus(401);
+    // }
 
 
 
@@ -34,6 +34,7 @@ module.exports =(app) => {
     function createUser(req, res) {
         var id = req.params['id'];
         var bod= req.body;
+        var curUser=req.session['currentUser'];
         if(bod.password === bod.confirmPassword ) {
             typeModel.checkEmailTaken(bod.email)
                 .then(rep =>
@@ -43,9 +44,14 @@ module.exports =(app) => {
                         var user={
                             email:bod.email,
                             password:bod.password,
+                            firstName: bod.firstName,
+                            lastName: bod.lastName,
                             school:id
                         }
                         typeModel.createApplicant(user)
+                            .then((user) => {
+                                if(!curUser)
+                                req.session['currentUser'] = user })
                             .then(user => res.send(user))
                     }
                     else res.sendStatus(409);

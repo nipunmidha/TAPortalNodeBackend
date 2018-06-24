@@ -16,6 +16,7 @@ function findAllIca() {
 function findAllIcaForCourse(courseId) {
     return instructorCourseModel.find({course:courseId})
         .populate('instructor')
+        .populate('school')
         .exec();
 }
 
@@ -33,33 +34,37 @@ function findIcaById(id) {
         .exec();
 }
 
-function updatePostionFilled(id,status) {
-    return instructorCourseModel.findOneAndUpdate({_id:id},{$set:{postionsFilled:status}})
+function updatePosstionFilled(id,status) {
+    return instructorCourseModel.update({_id:id},{$set:{postionsFilled: status}})
 }
 
 function updateCourseCompleted(id,status) {
-    return instructorCourseModel.findOneAndUpdate({_id:id},{$set:{courseCompleted:status}})
+    return instructorCourseModel.update({_id:id},{$set:{courseCompleted:status}})
+}
+function deleteIca (id) {
+    return instructorCourseModel.remove({_id: id});
 }
 
 updateIca=(id,ica)=>(
-    instructorCourseModel.findById(id)
-        .then((oldIca)=>
-        {
-            if(ica.classStrength)
-                oldIca.classStrength=ica.classStrength
-            if(ica.noOfTa)
-                oldIca.noOfTa=ica.noOfTa
-            if(ica.syllabus)
-                oldIca.syllabus=ica.syllabus
-            if(ica.skillsMustNeeded)
-                oldIca.skillsMustNeeded=ica.skillsMustNeeded
-            if(ica.year)
-                oldIca.year=ica.semestyearer
-            if(ica.sectionName)
-                oldIca.sectionName=ica.sectionName
-            instructorCourseModel.updateOne({_id:id},oldIca);
-            return oldIca;
-        })
+    instructorCourseModel.update({_id: id},{$set: ica})
+    // instructorCourseModel.findById(id)
+    //     .then((oldIca)=>
+    //     {
+    //         if(ica.classStrength)
+    //             oldIca.classStrength=ica.classStrength
+    //         if(ica.noOfTa)
+    //             oldIca.noOfTa=ica.noOfTa
+    //         if(ica.syllabus)
+    //             oldIca.syllabus=ica.syllabus
+    //         if(ica.skillsMustNeeded)
+    //             oldIca.skillsMustNeeded=ica.skillsMustNeeded
+    //         if(ica.year)
+    //             oldIca.year=ica.semestyearer
+    //         if(ica.sectionName)
+    //             oldIca.sectionName=ica.sectionName
+    //         instructorCourseModel.updateOne({_id:id},oldIca);
+    //         return oldIca;
+    //     })
 )
 
 var api={
@@ -69,8 +74,9 @@ var api={
     updateIca:updateIca,
     findAllIcaForCourse:findAllIcaForCourse,
     findAllIcaForInstructor:findAllIcaForInstructor,
-    updatePostionFilled:updatePostionFilled,
-    updateCourseCompleted:updateCourseCompleted
+    updatePosstionFilled:updatePosstionFilled,
+    updateCourseCompleted:updateCourseCompleted,
+    deleteIca: deleteIca
 }
 
 module.exports = api;

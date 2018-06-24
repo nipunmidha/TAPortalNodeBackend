@@ -18,7 +18,17 @@ function findUserById(userId) {
 
  login=(credentials)=>{
 
-    return userModel.findOne(credentials,{password:0});
+     return userModel.findOne(credentials,{password:0})
+         .then(user =>{
+             if (user._doc.type === "ADMIN") {
+                 return user; }
+             else {
+                return userModel.findById(user._id,{password:0})
+                     .populate('school')
+                     .exec();
+             }
+         })
+
  }
 
 deleteUser=(userId)=>{

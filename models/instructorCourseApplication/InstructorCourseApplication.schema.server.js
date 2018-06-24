@@ -3,6 +3,7 @@ const SEMESTER=["fall","spring","summer1","summer2","summer-full"]
 var instructorCourse = mongoose.Schema({
         classStrength: Number,
         noOfTa: Number,
+        taHired: { type: Number, default: 0 },
         syllabus:String,
         skillsMustNeeded:String,
         sectionName:String,

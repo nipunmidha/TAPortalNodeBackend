@@ -13,6 +13,7 @@ module.exports =(app) => {
     function createUser(req, res) {
         var id = req.params['id'];
         var bod= req.body;
+        var curUser=req.session['currentUser'];
         if(bod.password === bod.confirmPassword )  {
             typeModel.checkEmailTaken(bod.email)
                 .then(rep =>
@@ -27,6 +28,9 @@ module.exports =(app) => {
                             school:id
                         }
                         typeModel.createInstructor(user)
+                            .then((user) => {
+                                if(!curUser)
+                                    req.session['currentUser'] = user })
                             .then(user => res.send(user))
                     }
                     else res.sendStatus(409);
@@ -37,12 +41,12 @@ module.exports =(app) => {
     }
 
 
-    app.get('/api/instructor/:id/profile',findUserById)
-    function findUserById(req, res) {
-        var id = req.params['id'];
-        typeModel.findInstructorById(id)
-            .then(user => res.send(user))
-    }
+    // app.get('/api/instructor/:id/profile',findUserById)
+    // function findUserById(req, res) {
+    //     var id = req.params['id'];
+    //     typeModel.findInstructorById(id)
+    //         .then(user => res.send(user))
+    // }
 
 
     app.put('/api/instructor/:id',updateUserById)

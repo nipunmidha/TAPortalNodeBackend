@@ -33,8 +33,8 @@ module.exports =(app) => {
             res.sendStatus(401);
     }
 
-    app.post('/api/instructor/course/:id',createCourse)
-    function createCourse(req, res) {
+    app.post('/api/instructor/course/:id',createICA)
+    function createICA(req, res) {
         var ica= req.body;
         var courseId = req.params['id'];
         var user=req.session['currentUser'];
@@ -64,11 +64,11 @@ module.exports =(app) => {
             .then(course => res.send(course))
     }
 
-    app.get('/api/ica/:id/updatePostionFilled?:status',updatePostionFilled)
-    function updatePostionFilled(req, res) {
+    app.put('/api/ica/:id/updatePositionFilled?:status',updatePositionFilled)
+    function updatePositionFilled(req, res) {
         var id = req.params['id'];
         var status=req.query.status;
-        typeModel.updatePostionFilled(id,status)
+        typeModel.updatePosstionFilled(id,status)
             .then(course => res.send(course))
     }
 
@@ -77,6 +77,13 @@ module.exports =(app) => {
         var id = req.params['id'];
         var ica= req.body;
         typeModel.updateIca(id,ica)
+            .then(ica => res.send(ica))
+    }
+
+    app.delete('/api/ica/:id', deleteIca)
+    function deleteIca(req, res) {
+        var id = req.params['id'];
+        typeModel.deleteIca(id)
             .then(ica => res.send(ica))
     }
 

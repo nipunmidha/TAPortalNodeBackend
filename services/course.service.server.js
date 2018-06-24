@@ -33,14 +33,31 @@ module.exports =(app) => {
     }
 
 
-    // app.put('/api/course/:id',updateCourseById)
-    // function updateCourseById(req, res) {
-    //     var id = req.params['id'];
-    //     var user= req.body;
-    //     typeModel.(id,user)
-    //         .then(user => res.send(user))
-    // }
+    app.put('/api/course/:id',updateCourseById)
+    function updateCourseById(req, res) {
+        var id = req.params['id'];
+        var user= req.body;
+        typeModel.updateCourse(id,user)
+            .then(user => res.send(user))
+    }
 
+    app.delete('/api/course/:id',deleteCourse)
+    function deleteCourse(req, res) {
+        var id = req.params['id'];
+        typeModel.deleteCourse(id)
+            .then(user => res.send(user))
+    }
+
+    app.post('/api/course/search',searchCourse)
+    function searchCourse(req, res) {
+        var course= req.body;
+        if(course.searchField && course.school) {
+            typeModel.searchCourse(course.searchField, course.school)
+                .then(resp => res.json(resp))
+        } else
+            res.sendStatus(400);
+
+    }
     //
     // app.put('/api/instructor/',updateUser)
     // function updateUser(req, res) {

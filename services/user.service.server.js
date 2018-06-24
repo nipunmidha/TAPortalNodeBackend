@@ -43,7 +43,11 @@ module.exports =(app) => {
             res.sendStatus(401);
     }
 
-
+    app.post('/api/logout', logout);
+    function logout(req, res) {
+        req.session.destroy();
+        res.sendStatus(200);
+    }
 
     app.delete('/api/user/:id',deleteUser)
     // Delete only from user collection
