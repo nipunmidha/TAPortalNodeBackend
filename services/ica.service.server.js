@@ -8,6 +8,23 @@ module.exports =(app) => {
             .then(icas => res.send(icas))
     }
 
+    app.get('/api/school/:id/ica',findAllIcaForSchool)
+    function findAllIcaForSchool(req, res) {
+        var id = req.params['id'];
+        typeModel.findAllIca()
+            .then(icas => {
+                res.json(icas.filter(ica => ica.school._id === id));
+            })
+    }
+    // app.get('/api/applicant/ica',findAllIcaForApplicant)
+    // function findAllIcaForApplicant(req, res) {
+    //     var user=req.session['currentUser'];
+    //     var id = user.school._id;
+    //     typeModel.findAllIca()
+    //         .then(icas => {
+    //             res.json(icas.filter(ica => ica.school._id === id));
+    //         })
+    // }
     app.get('/api/course/:id/ica',findAllIcasForCourse)
     function findAllIcasForCourse(req, res) {
         var id = req.params['id'];

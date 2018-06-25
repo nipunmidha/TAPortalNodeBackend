@@ -50,16 +50,17 @@ module.exports =(app) => {
                         }
                         typeModel.createApplicant(user)
                             .then((user) => {
-                                if(!curUser)
-                                req.session['currentUser'] = user })
-                            .then(user => res.send(user))
-                    }
-                    else res.sendStatus(409);
-                })
+                                if(!curUser || !curUser.type === 'ADMIN'){
+                                    typeModel.findApplicantById(user._id)
+                                        .then((user) => req.session['currentUser'] = user)
+                                        .then(user => res.send(user))
+                                }
+                            })
 
-        }
-        else res.sendStatus(401);
-    }
+                    }
+                    else res.sendStatus(401);
+                })}
+    else res.sendStatus(400);   }
 
 
     app.put('/api/applicant/',updateUser)
