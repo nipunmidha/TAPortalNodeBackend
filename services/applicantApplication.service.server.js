@@ -34,6 +34,20 @@ module.exports =(app) => {
             res.sendStatus(401);
     }
 
+    app.get('/api/applicant/:id/aa',findAllApplicationsForApplicantbyId)
+    function findAllApplicationsForApplicantbyId(req, res) {
+        var id = req.params['id'];
+        typeModel.findAllAppliedApplicationsForApplicant(id)
+                .then(aa =>
+                {
+                    if(aa.length>0)
+                        res.send(aa)
+                    else
+                        res.json([])
+                })
+
+    }
+
     app.post('/api/applicant/ica/:id/aa',createApplicantApplication)
     function createApplicantApplication(req, res) {
         var aa= req.body;
