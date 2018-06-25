@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var applicantApplication = require('./InstructorCourseApplication.schema.server');
+var applicantApplication = require('./applicantApplication.schema.server');
 var applicantApplicationModel = mongoose.model('ApplicantApplicationModel', applicantApplication);
 
 function createApplicantApplication(ica) {

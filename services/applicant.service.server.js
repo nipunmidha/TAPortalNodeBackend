@@ -9,13 +9,12 @@ module.exports =(app) => {
             .then(users => res.send(users))
     }
 
-
-    // app.get('/api/applicant/:id/profile',findUserById)
-    // function findUserById(req, res) {
-    //     var id = req.params['id'];
-    //     typeModel.findApplicantById(id)
-    //         .then(user => res.send(user))
-    // }
+    app.get('/api/applicant/:id/profile',findUserById)
+    function findUserById(req, res) {
+        var id = req.params['id'];
+        typeModel.findApplicantById(id)
+            .then(user => res.send(user))
+    }
 
 
     // app.get('/api/applicant/profile',findUserProfile)
@@ -54,11 +53,10 @@ module.exports =(app) => {
                                     typeModel.findApplicantById(user._id)
                                         .then((user) => req.session['currentUser'] = user)
                                         .then(user => res.send(user))
-                                }
+                                }  res.json(user);
                             })
 
                     }
-                    else res.sendStatus(401);
                 })}
     else res.sendStatus(400);   }
 

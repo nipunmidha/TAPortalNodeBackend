@@ -8,15 +8,15 @@ module.exports =(app) => {
             .then(icas => res.send(icas))
     }
 
-    app.get('/api/ica/:id/aa',findAllApplicantApplicationsForPostion)
-    function findAllApplicantApplicationsForPostion(req, res) {
+    app.get('/api/ica/:id/aa',findAllApplicationsForPostion)
+    function findAllApplicationsForPostion(req, res) {
         var id = req.params['id'];
         typeModel.findAllApplicantApplicationsForPostion(id)
             .then(aa => res.send(aa))
     }
 
-    app.get('/api/applicant/aa',findAllAppliedApplicationsForApplicant)
-    function findAllAppliedApplicationsForApplicant(req, res) {
+    app.get('/api/applicant/aa',findAllApplicationsForApplicant)
+    function findAllApplicationsForApplicant(req, res) {
         var user=req.session['currentUser'];
 
         if(user && user.type==="APPLICANT")
@@ -33,15 +33,15 @@ module.exports =(app) => {
             res.sendStatus(401);
     }
 
-    app.post('/api/applicant/ica/:id',createApplicantApplication)
+    app.post('/api/applicant/ica/:id/aa',createApplicantApplication)
     function createApplicantApplication(req, res) {
         var aa= req.body;
         var icaId = req.params['id'];
         var user=req.session['currentUser'];
         if(user && user.type==="APPLICANT") {
-            ica.position = icaId;
-            ica.applicant=user._id;
-            typeModel.createApplicantApplication(ica)
+            aa.position = icaId;
+            aa.applicant=user._id;
+            typeModel.createApplicantApplication(aa)
                 .then(aa => res.send(aa))
         } else
             res.sendStatus(401);

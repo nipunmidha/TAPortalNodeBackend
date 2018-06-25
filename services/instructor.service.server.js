@@ -34,6 +34,7 @@ module.exports =(app) => {
                                         .then((user) => req.session['currentUser'] = user)
                                         .then(user => res.send(user))
                                 }
+                                res.json(user);
                 })
 
         }

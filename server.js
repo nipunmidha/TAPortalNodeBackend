@@ -43,5 +43,6 @@ require('./services/skill.service.server')(app);
 require('./services/school.service.server')(app);
 require('./services/course.service.server')(app);
 require('./services/ica.service.server')(app);
+require('./services/applicantApplication.service.server')(app)
 require('./services/admin.service.server')(app);
 app.listen(process.env.PORT ||3000)

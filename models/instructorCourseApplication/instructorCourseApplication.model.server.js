@@ -23,6 +23,7 @@ function findAllIcaForCourse(courseId) {
 function findAllIcaForInstructor(instructorId) {
     return instructorCourseModel.find({instructor:instructorId})
         .populate('course')
+        .populate('instructor')
         .exec();
 }
 
