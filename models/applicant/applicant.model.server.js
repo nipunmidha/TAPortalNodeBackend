@@ -51,13 +51,21 @@ updateUser=(id,user)=> (
     //     )
 )
 
+updateRatings = (id, rating) => {
+    return   studentModel.findOne({_id:id}).then(student => {
+    var newRatinhg = (rating + (student.avgRating * student.rated)) / (1+ student.rated);
+    var s ={avgRating: newRatinhg, rated: student.rated + 1}
+    return studentModel.update({_id: id},{$set: s})});
+}
+
 var api={
     createApplicant:createApplicant,
     findAllApplicants:findAllApplicants,
     findApplicantById:findApplicantById,
     updateUser:updateUser,
     deleteApplicant:deleteApplicant,
-    checkEmailTaken:checkEmailTaken
+    checkEmailTaken:checkEmailTaken,
+    updateRatings: updateRatings
 }
 
 

@@ -42,6 +42,12 @@ function updatePosstionFilled(id,status) {
 function updateCourseCompleted(id,status) {
     return instructorCourseModel.update({_id:id},{$set:{courseCompleted:status}})
 }
+
+function increaseTaHired(id) {
+    return instructorCourseModel.update({_id: id}, {
+        $inc: {taHired: 1}
+    });
+}
 function deleteIca (id) {
     return instructorCourseModel.remove({_id: id});
 }
@@ -77,7 +83,8 @@ var api={
     findAllIcaForInstructor:findAllIcaForInstructor,
     updatePosstionFilled:updatePosstionFilled,
     updateCourseCompleted:updateCourseCompleted,
-    deleteIca: deleteIca
+    deleteIca: deleteIca,
+    increaseTaHired: increaseTaHired
 }
 
 module.exports = api;

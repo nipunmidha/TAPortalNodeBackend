@@ -22,6 +22,7 @@ function findAllAppliedApplicationsForApplicant(id) {
 function findAllApplicantApplicationsForPostion(id) {
     return applicantApplicationModel.find({position:id})
         .populate('applicant')
+        .populate('position')
         .exec();
 }
 
@@ -40,16 +41,16 @@ function updateIsSelected(id,status) {
 
 
 updateAa=(id,application)=>(
-    applicantApplicationModel.findById(id)
-        .then((oldApplication)=>
-        {
-            if(application.classStrength)
-                oldApplication.instructorRemarks=application.instructorRemarks
-            if(application.noOfTa)
-                oldApplication.instructorRating=application.instructorRating
-            applicantApplicationModel.updateOne({_id:id},oldApplication);
-            return oldApplication;
-        })
+    applicantApplicationModel.update({_id:id},{$set: application})
+        // .then((oldApplication)=>
+        // {
+        //     if(application.classStrength)
+        //         oldApplication.instructorRemarks=application.instructorRemarks
+        //     if(application.noOfTa)
+        //         oldApplication.instructorRating=application.instructorRating
+        //     applicantApplicationModel.updateOne({_id:id},oldApplication);
+        //     return oldApplication;
+        // })
 )
 
 var api={

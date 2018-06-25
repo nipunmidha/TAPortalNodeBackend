@@ -1,6 +1,7 @@
 module.exports =(app) => {
     var typeModel = require('../models/applicantApplication/applicantApplication.model.server')
-
+    var icaModel = require('../models/instructorCourseApplication/instructorCourseApplication.model.server')
+    var studentModel = require('../models/applicant/applicant.model.server')
 
     app.get('/api/aa',findAllApplicantApplications)
     function findAllApplicantApplications(req, res) {
@@ -27,7 +28,7 @@ module.exports =(app) => {
                     if(aa.length>0)
                         res.send(aa)
                     else
-                        res.sendStatus(404)})
+                        res.json([])})
         }
         else
             res.sendStatus(401);
@@ -56,20 +57,24 @@ module.exports =(app) => {
             .then(aa => res.send(aa))
     }
 
-    app.get('/api/aa/:id/updateselected?:status',updateIsSelected)
+    app.get('/api/position/:posId/aa/:id/updateselected?:status',updateIsSelected)
     function updateIsSelected(req, res) {
         var id = req.params['id'];
+        var pos = req.params['posId'];
         var status=req.query.status;
-        typeModel.updateIsSelected(id,status)
-            .then(course => res.send(course))
+        icaModel.increaseTaHired(pos)
+            .then(() => typeModel.updateIsSelected(id,status)
+                .then(course => res.send(course)))
     }
 
-    app.put('/api/ica/:id',updateAa)
+    app.put('/api/aa/review',updateAa)
     function updateAa(req, res) {
-        var id = req.params['id'];
         var aa= req.body;
-        typeModel.updateAa(id,aa)
-            .then(aa => res.send(aa))
+        var user = aa.applicant;
+        studentModel.updateRatings(user,aa.instructorRating)
+            .then(() =>  typeModel.updateAa(aa._id, aa)
+                .then(aa => res.send(aa)));
+
     }
 
 }
