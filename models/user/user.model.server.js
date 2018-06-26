@@ -20,7 +20,7 @@ function findUserById(userId) {
 
      return userModel.findOne(credentials,{password:0})
          .then(user =>{
-             if (user._doc.type === "ADMIN") {
+             if (!user || user._doc.type === "ADMIN") {
                  return user; }
              else {
                 return userModel.findById(user._id,{password:0})
