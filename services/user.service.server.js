@@ -18,7 +18,7 @@ module.exports =(app) => {
                     res.json(user);
                 }
                 else
-                    res.status(401);
+                    res.sendStatus(401);
             })
     }
 
