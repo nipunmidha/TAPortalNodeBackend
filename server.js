@@ -11,8 +11,12 @@ var app = express()
 
 // For cross-origin
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin",
-        "http://localhost:4200");
+    var allowedOrigins = ['https://taportal18.herokuapp.com','http://localhost:4200'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    // res.header("Access-Control-Allow-Origin","*");
     res.header("Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods",
@@ -20,7 +24,6 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Credentials", "true");
     next();
 });
-
 // Body Parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,8 +34,13 @@ var session = require('express-session')
 app.use(session({
     resave: false,
     saveUninitialized: true,
-    secret: 'any string'
+    secret: 'any string',
+    cookie: {
+        maxAge: 30 * 60 * 1000,
+    },
+    rolling: true
 }));
+
 
 
 //Service Calls
