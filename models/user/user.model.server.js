@@ -16,20 +16,27 @@ function findUserById(userId) {
         .exec();
 }
 
- login=(credentials)=>{
+ // login=(credentials) => {
+ //     return userModel.findOne(credentials,{password:0})
+ //         .then(user => {
+ //             if (!user || user._doc.type === "ADMIN") {
+ //                 return user; }
+ //             else {
+ //                return userModel.findById(user._id,{password:0})
+ //                     .populate('school')
+ //                     .exec();
+ //             }
+ //         })
+ //
+ // }
 
-     return userModel.findOne(credentials,{password:0})
-         .then(user =>{
-             if (!user || user._doc.type === "ADMIN") {
-                 return user; }
-             else {
-                return userModel.findById(user._id,{password:0})
-                     .populate('school')
-                     .exec();
-             }
-         })
+login=(credentials)=>{
 
- }
+    return userModel.findOne(credentials,{password:0})
+        .populate('school')
+        .exec()
+        .then(user => (user))
+}
 
 deleteUser=(userId)=>{
     userModel.deleteOne({_id:userId});

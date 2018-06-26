@@ -1,5 +1,6 @@
 module.exports =(app) => {
     var typeModel = require('../models/applicant/applicant.model.server')
+    var userModel = require('../models/user/user.model.server')
     var skillModel = require('../models/skill/skill.model.server')
 
 
@@ -32,33 +33,32 @@ module.exports =(app) => {
     app.post('/api/school/:id/applicant',createUser)
     function createUser(req, res) {
         var id = req.params['id'];
-        var bod= req.body;
-        var curUser=req.session['currentUser'];
-        if(bod.password === bod.confirmPassword ) {
+        var bod = req.body;
+        var curUser = req.session['currentUser'];
+        if (bod.password === bod.confirmPassword) {
             typeModel.checkEmailTaken(bod.email)
-                .then(rep =>
-                {
-                    if(rep.length === 0)
-                    {
-                        var user={
-                            email:bod.email,
-                            password:bod.password,
+                .then(rep => {
+                    if (rep.length === 0) {
+                        var user = {
+                            email: bod.email,
+                            password: bod.password,
                             firstName: bod.firstName,
                             lastName: bod.lastName,
-                            school:id
+                            school: id
                         }
                         typeModel.createApplicant(user)
-                            .then((user) => {
-                                if(!curUser || !curUser.type === 'ADMIN'){
-                                    typeModel.findApplicantById(user._id)
+                            .then(() => {
+                                if (!curUser || curUser.type !== 'ADMIN') {
+                                    userModel.login({email: user.email, password: user.password})
                                         .then((user) => req.session['currentUser'] = user)
-                                        .then(user => res.send(user))
-                                }  res.json(user);
+                                        .then(() => res.json(user))
+                                }
                             })
-
                     }
-                })}
-    else res.sendStatus(400);   }
+                    else res.sendStatus(401);
+                })
+        } else res.sendStatus(400);
+    }
 
 
     app.put('/api/applicant/',updateUser)
