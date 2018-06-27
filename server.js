@@ -11,7 +11,7 @@ var app = express()
 
 // For cross-origin
 app.use(function(req, res, next) {
-    var allowedOrigins = ['https://taportal18.herokuapp.com','http://localhost:4200'];
+    var allowedOrigins = ['https://taportal18.herokuapp.com','http://taportal18.herokuapp.com','http://localhost:4200'];
     var origin = req.headers.origin;
     if(allowedOrigins.indexOf(origin) > -1){
         res.setHeader('Access-Control-Allow-Origin', origin);
